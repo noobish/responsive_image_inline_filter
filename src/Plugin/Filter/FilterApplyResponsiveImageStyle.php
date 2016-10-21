@@ -9,7 +9,6 @@ use Drupal\filter\FilterProcessResult;
 use Drupal\filter\Plugin\FilterBase;
 use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\responsive_image\Entity\ResponsiveImageStyle;
 
 
 /**
@@ -133,7 +132,7 @@ class FilterApplyResponsiveImageStyle extends FilterBase implements ContainerFac
         'width' => $img->getAttribute('width'),
         'height' => $img->getAttribute('height'),
         'attributes' => $attributes,
-        'responsive_image_style_id' => $this->settings['inline_responsive_style'],
+        'responsive_image_style_id' => $this->defaultConfiguration()['default_style'],
       );
       $renderedPicture = \Drupal::theme()->render('responsive_image', $variables);
 

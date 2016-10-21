@@ -1,0 +1,11 @@
+responsive_image_inline_filter.settings:
+  type: config_object
+  label: 'Responsive Image Inline Filter settings'
+  mapping:
+    responsive_style:
+      type: mapping
+      label: 'Responsive Image Style'
+      mapping:
+        default:
+          type: string
+          label: 'Default value'
