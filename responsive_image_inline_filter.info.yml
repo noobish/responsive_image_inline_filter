@@ -1,0 +1,9 @@
+name: Responsive Image Inline Filter
+type: module
+description: Applies Responsive Image styles to images uploaded through Media
+core: 8.x
+package: Filters
+configure: filter.admin_overview
+dependencies:
+  - filter
+  - responsive_image

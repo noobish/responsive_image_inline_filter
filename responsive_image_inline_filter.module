@@ -1,0 +1,25 @@
+<?php
+
+/**
+ * @file
+ * Contains responsive_image_inline_filter.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function responsive_image_inline_filter_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the responsive_image_inline_filter module.
+    case 'help.page.responsive_image_inline_filter':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Applies Responsive Image styles to images uploaded through Media.') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+

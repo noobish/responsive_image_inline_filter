@@ -1,0 +1,15 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - responsive_image_inline_filter
+  enforced:
+    module:
+      - responsive_image_inline_filter
+    config:
+        - image.style.max_325x325
+id: inline_responsive
+label: 'Inline Responsive'
+image_style_mappings: {  }
+breakpoint_group: responsive_image
+fallback_image_style: max_325x325
