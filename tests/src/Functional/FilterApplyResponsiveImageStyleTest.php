@@ -87,7 +87,7 @@ class FilterApplyResponsiveImageStyleTest extends BrowserTestBase  {
    * Test text filter processing of img tags
    */
   public function testProcessImages() {
-    $uri = 'base:core/themes/bartik/screenshot.png';
+    $uri = 'core/themes/bartik/screenshot.png';
 
     $file = File::create(array('uri' => $uri));
     $file->save();
