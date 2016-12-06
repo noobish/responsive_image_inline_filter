@@ -10,7 +10,6 @@ use Drupal\filter\Plugin\FilterBase;
 use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Form\FormStateInterface;
 
-
 /**
  * Provides a filter to apply responsive image styles to inline images.
  *
@@ -66,7 +65,7 @@ class FilterApplyResponsiveImageStyle extends FilterBase implements ContainerFac
   public function defaultConfiguration() {
     $default_config = \Drupal::config('responsive_image_inline_filter.settings');
     return array(
-      'default_style' => $default_config->get('responsive_style.default')
+      'default_style' => $default_config->get('responsive_style.default'),
     );
   }
 
@@ -76,7 +75,7 @@ class FilterApplyResponsiveImageStyle extends FilterBase implements ContainerFac
   public function settingsForm(array $form, FormStateInterface $form_state) {
     $em = \Drupal::entityTypeManager();
 
-    //get responsive image styles
+    // Get responsive image styles.
     $styles = array();
     foreach ($em->getStorage('responsive_image_style')->loadMultiple() as $style) {
       $styles[$style->id()] = $style->label();
@@ -93,30 +92,32 @@ class FilterApplyResponsiveImageStyle extends FilterBase implements ContainerFac
   }
 
   /**
-   * Replace all img tags with picture tags as formatted by the Responsive
-   * Image module.
+   * Replace all img tags with picture tags.
+   *
+   * The replacement is as formatted by the Responsive Image module.
    *
    * @param string $text
    *   Markup possibly containing img tags in need of updating.
    *
-   * @return string Markup with the picture replacements
+   * @return string
+   *   Markup with the picture replacements.
    */
   private function processImages($text) {
     $dom = Html::load($text);
     $xpath = new \DOMXPath($dom);
     $imgs = $xpath->query('//img');
 
-    //iterate backwards through images so we can replace the elements
-    for($i = $imgs->length - 1; $i > -1; $i--) {
+    // Iterate backwards through images so we can replace the elements.
+    for ($i = $imgs->length - 1; $i > -1; $i--) {
       $img = $imgs[$i];
       $file = $this->entityRepository->loadEntityByUuid('file', $img->getAttribute('data-entity-uuid'));
 
-      //only consider media module uploaded files
+      // Only consider media module uploaded files.
       if (is_null($file)) {
         continue;
       }
 
-      //collect element attributes
+      // Collect element attributes.
       $attributes = array();
       if ($img->hasAttributes()) {
         foreach ($img->attributes as $a) {
@@ -126,7 +127,7 @@ class FilterApplyResponsiveImageStyle extends FilterBase implements ContainerFac
         }
       }
 
-      //get rendered picture element's html
+      // Get rendered picture element's html.
       $variables = array(
         'uri' => $file->getFileUri(),
         'width' => $img->getAttribute('width'),
@@ -136,14 +137,15 @@ class FilterApplyResponsiveImageStyle extends FilterBase implements ContainerFac
       );
       $renderedPicture = \Drupal::theme()->render('responsive_image', $variables);
 
-      //convert it back to fragments
+      // Convert it back to fragments.
       $pictureElement = $dom->createDocumentFragment();
       $pictureElement->appendXML($renderedPicture);
 
-      //replace original img tag with picture element
+      // Replace original img tag with picture element.
       $imgs[$i]->parentNode->replaceChild($pictureElement, $img);
     }
 
     return Html::serialize($dom);
   }
+
 }

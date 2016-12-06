@@ -22,4 +22,3 @@ function responsive_image_inline_filter_help($route_name, RouteMatchInterface $r
     default:
   }
 }
-

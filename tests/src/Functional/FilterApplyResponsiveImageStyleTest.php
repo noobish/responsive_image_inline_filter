@@ -2,11 +2,7 @@
 
 namespace Drupal\Tests\responsive_image_inline_filter\Functional;
 
-use Drupal\responsive_image\Entity\ResponsiveImageStyle;
-use Drupal\responsive_image_inline_filter\Plugin\Filter\FilterApplyResponsiveImageStyle;
 use Drupal\Tests\BrowserTestBase;
-use Drupal\simpletest\ContentTypeCreationTrait;
-use Drupal\field\Entity\FieldConfig;
 use Drupal\filter\Entity\FilterFormat;
 use Drupal\file\Entity\File;
 use Drupal\Core\Url;
@@ -16,7 +12,7 @@ use Drupal\Core\Url;
  *
  * @group responsive_image_inline_filter
  */
-class FilterApplyResponsiveImageStyleTest extends BrowserTestBase  {
+class FilterApplyResponsiveImageStyleTest extends BrowserTestBase {
   /**
    * Modules to enable.
    *
@@ -31,33 +27,38 @@ class FilterApplyResponsiveImageStyleTest extends BrowserTestBase  {
   );
 
   /**
+   * Sample node which will contain test html.
+   *
    * @var \Drupal\node\NodeInterface
    */
   protected $node;
 
   /**
-   * A user with access content permission
+   * A user with access content permission.
    *
    * @var \Drupal\user\UserInterface
    */
   protected $user;
 
   /**
-   * Mocked configuration store
+   * Mocked configuration store.
    *
    * @var \Drupal\Core\Config\StorageInterface
    */
   protected $config;
 
   /**
-   * Basic HTML filter format
+   * Basic HTML filter format.
    *
-   * Allows img tags and has responsive_images_inline_filter applied
+   * Allows img tags and has responsive_images_inline_filter applied.
    *
    * @var \Drupal\Core\Entity\EntityInterface
    */
   protected $basicFilterFormat;
 
+  /**
+   * Tasks common to all tests.
+   */
   protected function setUp() {
     parent::setUp();
 
@@ -84,7 +85,7 @@ class FilterApplyResponsiveImageStyleTest extends BrowserTestBase  {
   }
 
   /**
-   * Test text filter processing of img tags
+   * Test text filter processing of img tags.
    */
   public function testProcessImages() {
     $uri = 'core/themes/bartik/screenshot.png';
@@ -92,14 +93,16 @@ class FilterApplyResponsiveImageStyleTest extends BrowserTestBase  {
     $file = File::create(array('uri' => $uri));
     $file->save();
 
-    //create new node
+    // Create new node.
     $this->node = $this->drupalCreateNode(array(
       'type' => 'page',
       'title' => 'new node',
-      'body' => [[
-        'format' => $this->basicFilterFormat->id(),
-        'value' => '<img src="' . $file->url() . '" data-entity-uuid="' . $file->uuid() . '">',
-      ]],
+      'body' => array(
+        array(
+          'format' => $this->basicFilterFormat->id(),
+          'value' => '<img src="' . $file->url() . '" data-entity-uuid="' . $file->uuid() . '">',
+        ),
+      ),
     ));
     $this->node->save();
 
@@ -109,4 +112,5 @@ class FilterApplyResponsiveImageStyleTest extends BrowserTestBase  {
 
     $this->assertSession()->elementExists('css', 'picture');
   }
+
 }
