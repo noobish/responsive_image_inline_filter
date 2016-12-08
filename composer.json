@@ -1,0 +1,17 @@
+{
+  "name": "drupal/responsive_image_inline_filter",
+  "description": "Applies Responsive Image styles to images uploaded through Media.",
+  "type": "drupal-module",
+  "homepage": "https://www.drupal.org/project/responsive_image_inline_filter",
+  "authors": [
+    {
+      "name": "Ian Freeman (ifreeman)",
+      "homepage": "https://www.drupal.org/user/3054261",
+      "role": "Maintainer"
+    },
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/responsive_image_inline_filter",
+    "source": "http://cgit.drupalcode.org/responsive_image_inline_filter"
+  },
+  "license": "GPL-2.0+"
+}

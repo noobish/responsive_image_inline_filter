@@ -3,9 +3,27 @@
 /**
  * @file
  * Contains responsive_image_inline_filter.module.
+ *
+ * Copyright (c) 2016, Lawrence Livermore National Security, LLC.
+ * Produced at the Lawrence Livermore National Laboratory.
+ * LLNL-CODE-711757 Written by Ian Freeman. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Url;
 
 /**
  * Implements hook_help().
@@ -16,9 +34,36 @@ function responsive_image_inline_filter_help($route_name, RouteMatchInterface $r
     case 'help.page.responsive_image_inline_filter':
       $output = '';
       $output .= '<h3>' . t('About') . '</h3>';
-      $output .= '<p>' . t('Applies Responsive Image styles to images uploaded through Media.') . '</p>';
+      $output .= '<p>' . t('Applies Responsive Image styles to inline images in
+        content fields.') . '</p>';
+      $output .= '<p>' . t('This module operates only on images uploaded through
+        the Media module, and is only applied when saving the content.') . '</p>';
+      $output .= '<h3>' . t('Configuration') . '</h3>';
+      $output .= '<ul><li>' . t('Configure the default responsive image style
+        used by this module in <a target="_blank" href=":formats">Text formats and editors</a>:',
+        array(':formats' => Url::fromRoute('filter.admin_overview')->toString())) . '</li>';
+      $output .= '<ol><li>' . t('Select the text format you wish to configure.') . '</li>';
+      $output .= '<li>' . t('Check Responsive Images under Enabled Filters.') . '</li>';
+      $output .= '<li>' . t('Choose the desired Reponsive Image Style under
+        Filter Settings » Responsive Images.') . '</li></ol>';
+      $output .= '<li>' . t('Configure responsive image styles in
+        <a href=":styles">Responsive Image Styles</a>.', array(
+          ':styles' => Url::fromRoute('entity.responsive_image_style.collection')->toString(),
+        )) . '</li></ul>';
+      $output .= '<p>' . t('It is recommended to utilize the sizes attribute with multiple image styles
+        when configuring responsive image styles, unless art direction is the main
+        intent. This results in a single img element with sizes and srcset attributes,
+        which the browser can utilize to make decisions about which image source to
+        load.') . '</p>';
+      $output .= '<p>' . t('If the text filter in use utilizes the Limit allowed HTML tags and correct
+        faulty HTML filter, either re-order the Responsive Images filter to be after
+        it, or add ') . '<code>&lt;picture&gt;</code>' . t(' to its Allowed HTML tags and ensure the ') .
+        '<code>&lt;img&gt;</code>' . t(' tag contains ') . '<code>srcset sizes</code>' . '. Example:' .
+        '</p><pre><code>&lt;a href hreflang&gt; &lt;em&gt; ... &lt;picture&gt; &lt;img src srcset sizes alt ... height&gt;</code></pre>';
+
       return $output;
 
     default:
+      return '';
   }
 }
