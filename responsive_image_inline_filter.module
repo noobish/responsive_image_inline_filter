@@ -40,15 +40,15 @@ function responsive_image_inline_filter_help($route_name, RouteMatchInterface $r
         the Media module, and is only applied when saving the content.') . '</p>';
       $output .= '<h3>' . t('Configuration') . '</h3>';
       $output .= '<ul><li>' . t('Configure the default responsive image style
-        used by this module in <a target="_blank" href=":formats">Text formats and editors</a>:',
-        array(':formats' => Url::fromRoute('filter.admin_overview')->toString())) . '</li>';
+        used by this module in <a target="_blank" href="@formats">Text formats and editors</a>:',
+        array('@formats' => Url::fromRoute('filter.admin_overview')->toString())) . '</li>';
       $output .= '<ol><li>' . t('Select the text format you wish to configure.') . '</li>';
       $output .= '<li>' . t('Check Responsive Images under Enabled Filters.') . '</li>';
       $output .= '<li>' . t('Choose the desired Reponsive Image Style under
         Filter Settings » Responsive Images.') . '</li></ol>';
       $output .= '<li>' . t('Configure responsive image styles in
-        <a href=":styles">Responsive Image Styles</a>.', array(
-          ':styles' => Url::fromRoute('entity.responsive_image_style.collection')->toString(),
+        <a href="@styles">Responsive Image Styles</a>.', array(
+          '@styles' => Url::fromRoute('entity.responsive_image_style.collection')->toString(),
         )) . '</li></ul>';
       $output .= '<p>' . t('It is recommended to utilize the sizes attribute with multiple image styles
         when configuring responsive image styles, unless art direction is the main
@@ -57,9 +57,9 @@ function responsive_image_inline_filter_help($route_name, RouteMatchInterface $r
         load.') . '</p>';
       $output .= '<p>' . t('If the text filter in use utilizes the Limit allowed HTML tags and correct
         faulty HTML filter, either re-order the Responsive Images filter to be after
-        it, or add ') . '<code>&lt;picture&gt;</code>' . t(' to its Allowed HTML tags and ensure the ') .
-        '<code>&lt;img&gt;</code>' . t(' tag contains ') . '<code>srcset sizes</code>' . '. Example:' .
-        '</p><pre><code>&lt;a href hreflang&gt; &lt;em&gt; ... &lt;picture&gt; &lt;img src srcset sizes alt ... height&gt;</code></pre>';
+        it, or add <code>&lt;picture&gt;</code> to its Allowed HTML tags and ensure the
+        <code>&lt;img&gt;</code> tag contains <code>srcset sizes</code>. Example:') . '</p>';
+      $output .= '</p><pre><code>&lt;a href hreflang&gt; &lt;em&gt; ... &lt;picture&gt; &lt;img src srcset sizes alt ... height&gt;</code></pre>';
 
       return $output;
 
